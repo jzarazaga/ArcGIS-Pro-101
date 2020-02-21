@@ -1,4 +1,4 @@
-# ArcGIS Pro 101
+# ArcGIS Pro Snow
 
 https://zarazaga.github.com/ArcGIS-Pro-Snow/
 
