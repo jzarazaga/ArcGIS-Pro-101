@@ -316,15 +316,22 @@ See how many homes with deaths are within each polygons.
 2.	In the **Find Tools Search Box**, search for **“summarize” > summarize within**.
 Input: **pumps_buffer**, and the features from the **deaths** layer
 Sumary Fields: **Num_cases: Sum** (we want to add all the cases within each buffer ring)   and click **Run**.
+
 ![](./media/summarizeWithin.png)
+
 Open the Attribute table.
 Each buffer ring has a different number of cases.
+
 ![](./media/bufferAttribute.png)
 
 Illustrate the difference in quantity within each buffer by color: in **symbology** use Graduated colors. 
+
 ![](./media/bufferSymb.png)
+
 Try different **Distribution** methods to test what this reveals about the data. 
+
 ![](./media/buffer_rings.png)
+
 We see that, after all, this wasn’t very useful representation. Let’s try a new way of finding out which addresses are connected to which pump. Buffers are not very useful because there are There are lots of points outside the buffers. Where did those people get their water?  Which is their closest pump?  We will test another tool.
 
 ### Voronoi (Thiessen) polygon (Spatial Allocation)
