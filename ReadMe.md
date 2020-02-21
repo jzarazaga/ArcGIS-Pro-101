@@ -275,11 +275,15 @@ We'll start by looking at this map [[Gegend von London 1853](https://www.davidru
 
 ![](./media/Gegend-drop-shadow.png)
 
-David Rumsey makes Open Geospatial Consortium (OGC) compliant services available for  georeferenced maps on his site. This means that you can use the maps directly in most modern GIS applications, including ArcGIS Pro, QGIS, ArcGIS Online, etc...
+David Rumsey makes Open Geospatial Consortium (OGC) compliant services available for  georeferenced maps on his site. This means that you can use the maps directly in most modern GIS applications, including ArcGIS Pro, QGIS, ArcGIS Online, etc.
 
 ### Adding a DavidRumsey.com WMTS map Service to ArcGIS Pro
 
-Here is the **Web Map Tile Service WMTS URL** for the Gegend map:  
+YOu have to sign into the goreferencer, and look for the WMTS link. 
+
+![](./media/georef.png)
+
+To save a step, hHere is the **Web Map Tile Service WMTS URL** for the Gegend map:  
 
 ```http
 https://maps.georeferencer.com/georeferences/28da2318-c4b3-5f25-83dc-3da27859fea2/2019-02-19T17:27:12.514288Z/wmts?key=mpIMvCWIYHCcIzNaqUSo&SERVICE=WMTS&REQUEST=GetCapabilities
@@ -287,29 +291,71 @@ https://maps.georeferencer.com/georeferences/28da2318-c4b3-5f25-83dc-3da27859fea
  
 This URL provides access to the georeferenced map outside of the DavidRumsey.com website.
 
+To insert this map into ArcGIS Pro, on the **Insert** tab, in the **Project** group, click the **Connections** icon drop-down list and click **New WMTS Server**. The **Add WMTS Server Connection** dialog box appears. Type the URL of the WTMS server site.
+IN the catalog paine, the maps.georeferencer shows up under the folder **Servers**. Expland the down arrow, and drag the map **Gerend von London** onto the **map** page. It will take a while to load. 
+
 ## Basic spatial data analysis (Using Geoprocessing Tools in ArcGIS Pro)
+
+At the top of ArcGIS Pro, click on the **Analysis** tab.  Some of the most common tools appear in the icons in the **tools** box on the right.  To see the full set of tools, click on the **Tools** button, which will open the **Geoprocessing** panel at the right.  Clicking on **Toolboxes** will show you ALL the tools. 
+
+### Buffer
+1.	To see how many deaths occured near each pump we will start with a simple analysis. Lets see if it's useful to know how many died within a 100 meter buffer around each pump.
+
+![](./media/bufferbutton.png)
+
+2. Use	**Analysis > Tools Box**, click on **Buffer** and the geoprocessing panel opens.
+Input: **pumps**
+Output: pumps_Buffer (this is the default)
+Distance : **100  Meters**    and click **Run**.
+![](./media/buffer.png)
+We can see some of the buffers contain many deaths, and others contain fewer. (It still doesn’t look very clear). We now decide to Count the number of cases within each buffer.   
+
+### Summarize within 
+See how many homes with deaths are within each polygons. 
+1.	**Analysis > Tools button** to open the Geoprocessing Panel
+2.	In the **Find Tools Search Box**, search for **“summarize” > summarize within**.
+Input: **pumps_buffer**, and the features from the **deaths** layer
+Sumary Fields: **Num_cases: Sum** (we want to add all the cases within each buffer ring)   and click **Run**.
+![](./media/summarizeWithin.png)
+Open the Attribute table.
+Each buffer ring has a different number of cases.
+![](./media/bufferAttribute.png)
+
+Illustrate the difference in quantity within each buffer by color: in **symbology** use Graduated colors. 
+![](./media/bufferSymb.png)
+Try different **Distribution** methods to test what this reveals about the data. 
+![](./media/buffer_rings.png)
+We see that, after all, this wasn’t very useful representation. Let’s try a new way of finding out which addresses are connected to which pump. Buffers are not very useful because there are There are lots of points outside the buffers. Where did those people get their water?  Which is their closest pump?  We will test another tool.
 
 ### Voronoi (Thiessen) polygon (Spatial Allocation)
 
-Thiessen polygons allocate space in an area of interest to a single feature per polygon. That is, within a Thiessen polygon, all other features are closer to the point that was used to generate that polygon than to any other point in the feature set. In this case, we will create a set of Thiessen polygons based upon the locations of the Water Pumps in our project. This will allow us to easily allocate all of the points in our death addresses dataset to the water pump that they are nearest using a simple spatial join.
+Thiessen polygons allocate space in an area of interest to a single feature per polygon. That is, within a Thiessen polygon, all features are closer to the point that was used to generate that polygon than to any other point in the feature set. In this case, we will create a set of Thiessen polygons based upon the locations of the **Water Pumps** in our project. This will allow us to easily allocate all of the points in our death addresses dataset to the water pump that they are nearest using a simple spatial join.
 
-1. At the top of **ArcGIS Pro**, click on the **Analysis tab**, then click on the **Tools button**, which will open the **Geoprocessing** panel at the right. 
-2. Using the **Find Tools** box, Search for **Voronoi** and click on the **Create Thiessen Polygons** tool, in the results.
-4. Set the options as: **Input Features:** Water Pumps; **Output Feature Class:** Voronoi: **Output Fields:** All fields.  
+1. Again click on the **Analysis tab > Tools button** to open the **Geoprocessing** panel. 
+2. Use the **Find Tools** box to search for **Voronoi** and click on the **Create Thiessen Polygons** tool.
+4. Set the options as: Input Features:**Water Pumps**; Output Feature Class: **Voronoi**; Output Fields: **All fields**.  
 ![](./media/voronoitool.png)  
-5. Click on the **Environments** tab and set the **Extent:** **Same as:Study_Area**; and click **Run**.  
+5. We want to ensure we include the whole map area, even that beyond the last pump. Click on the **Environments** tab and set the Extent: **Same as:Study_Area**; and click **Run**.  
 6. The result will be (as shown below) a layer of polygons that define the area closest to the water pumps that generated them.   
 ![](media/voronoi.png)  
-7. Right-click on the new Voronoi layer and Open the Attribute table. Note that it contains the fields from the **Water Pumps**, including the **Label** field.  
+7. Right-click on the new Voronoi layer and Open the Attribute table. Note that it contains the fields from the **Water Pumps**, including the **Label** field.  Make the lables visible: **Feature Layer > Labeling Tab > Label **(field is Label)
+
+### Summarize within again
+Now that you have created the Voronoi polygon layer we can again try using **Summarize within** to see how many homes are within each polygon.
+**Analysis > Tools > Geoprocessing Panel > summarize within**.
+Input: **Voronoi**, and the features from the **deaths** layer
+Summary Fields: **Num_cases: Sum** (we want to add all the cases within each polygon)  and **Run**.
+Look at the **Attribute Table**. 
+We see the total cases connected to each pump.  Clearly the Broad street pump is culpable.  
 
 ### Spatial Join (Point Aggregation)
+But we also want to know, for each individual death, which pump is attributed (or closest) to that address.  This will allow greater statistical understanding. To “allocate” each address to one of the Voronoi polygons we have a better tool.  We will use a **Spatial Join** so that for each **death address** point, the vernoi polygon’s attribute (pump name) is also connected to it. 
 
-Now that you have created the Voronoi polygon layer, you will “allocate” each of the deaths to one of the Voronoi polygons. To do this, we will use a **Spatial Join**. Conceptually, what we will be doing is like passing our points through the polygons so that the polygon's attributes "stick" to the points.  
-
-1. Right-click on the Deaths layer and go to **Joins and Relates>Spatial Join** to open the **Spatial Join** Geoprocessing tool.
-2. Because the tool was opened from the **Deaths** layer, the **Target Features:** are correctly set. Use the drop-down to select **Voronoi** as the **Join Features** and change the **Output Feature Class** to **Deaths_Allocated**. The remaining default settings should appropriate.  
+1. We can do: **Analysis > Tools >Spatial Join** to open the **Spatial Join** Geoprocessing tool. 
+(*Or try Right-click on the Deaths layer and go to Joins and Relates>Spatial Join.   If the tool is opened from the Deaths layer, the Target Features: are already set.)* 
+2. Use **Voronoi** as the **Join Features** and change the **Output Feature Class** to **Deaths_Allocated**. The remaining default settings should appropriate.  
 ![](./media/spatialjoin.png)  
-3. A new layer, called **Deaths_Allocated** will be added to the **Table of Contents**. Right-click on the new **Deaths_Allocated** layer and open the **Attribute Table** to confirm that each record now has the "**Label**" for the the nearest **Water Pump**.   
+3. A new layer, called **Deaths_Allocated** will be added to the **Table of Contents**. Open the **Attribute Table** to confirm that each record now has the "**Label**" for the the nearest **Water Pump**.  (to open: **Feature Layer > data > Attribute Table**, or right-click on the **Deaths_Allocated** layer)
 ![](./media/labelfield.png)  
 
 ### Summary Statistics
@@ -331,56 +377,56 @@ The Mean Center is defined by the average x- and y-coordinate of all the feature
 
 First, we will calculate a simple spatial mean. This is simply the mean center of the **distribution of locations** 
 
-1. Click on the Analysis>Tools button to open the **Geoprocessing Panel**
-2. In the *Find Tools* Search Box, search for "Mean Center"
-3. The first result should be the **Mean Center** geoprocessing script. Click to **open** it's dialog.
-4. Use **Deaths_Allocated** as the **Input Feature Class** and check that the **Output Feature Class** is going to your **Default.gdb** and has a meaningful name. Click **Run**.
+1. CUse the **Analysis > Tools** button to open the **Geoprocessing Panel**
+2. In the *Find Tools* Search Box, search for **Mean Center** geoprocessing script.
+4. Use **Deaths_Allocated** as the Input Feature Class, and give the Output Feature Class a meaningful name. **Run**.
 
-A new Layer will be added to your Map with a single feature, representing the *Spatial Mean* of the distribution of *addresses* at which deaths took place. That is, we have determined the *Spatial Mean of the effected addresses*, but not the Spatial Mean of all of the deaths in the neighborhood. We can now use the Num_Cases field to calculate the *Spatial Mean* of all deaths in the outbreak, by calculating a **Weighted Spatial Mean**
+The new Layer added to your Map has a single feature: the *Spatial Mean* of the distribution of *addresses* at which deaths took place. That is, we have determined the *Spatial Mean of the effected addresses*, however it is not the Spatial Mean of all of the deaths in the neighborhood, since some addresses had many. 
+
 ![](media/spatialmean.png)
 
 ### Weighted Spatial Mean
+We will use the Num_Cases field to calculate the *Spatial Mean* of all deaths in the outbreak, by calculating a **Weighted Spatial Mean**
+1. **Run** the **Mean Center tool** again, this time assigning the **Num_Cases** field as the **Weight Field**. Rename the **Output Feature Class** by adding a "W" to the end of the filename.
+2. Click on the color patch for the resulting layer to select a color that contrasts with that of the previous, unweighted Mean. 
 
-1. **Run** the **Mean Center tool** again, this time assigning the **Num_Cases** field as the **Weight Field**. Rename the **Output Feature Class** by adding a "W" to the end of the filename of the previous run.
-2. Right-click on the color patch for the resulting layer and select a color that contrasts with the color of the previous, unweighted, Spatial Mean. 
-
-Note that, while the change is slight (this is a relatively small and uniform distribution of points), there is a noticeably movement of the **Weighted Spatial Mean**, towards the Broad Street Pump. 
+Note that, while the change is slight in this relatively small and uniform distribution of points, there is a noticeably movement of the **Weighted Spatial Mean** towards the Broad Street Pump. 
 
 ![](media/weightedmean.png)
 
-#### Bonus:  
-Run the Weighted Spatial Mean again, this time setting the **Case Field** option to the "**Label**" field and observe the results. This has the effect of "casing" the spatial mean, based upon the spatial allocation that we did earlier. Do you notice anything about the general trend among all of the Spatial Means, cased by Water Pump?
+#### Cased Spatial Mean 
+Run the Weighted Spatial Mean again, this time setting the **Case Field** option to the "**Label**" field and observe the results. This has the effect of "casing" the spatial mean, based upon the spatial allocation that we did earlier.
 
 ![](media/casedmeans.png)
 
 ### Standard Distance
 
-The Standard Distance is the spatial statistics equivalent of the standard deviation. It describes the radius around the spatial mean (or weighted spatial mean), which contains 68% of locations in your dataset. It can be very useful for working with GPS data.
+The **Standard Distance** is the spatial statistics equivalent of the standard deviation. It describes the radius around the spatial mean (or weighted spatial mean), which contains 68% of locations in your dataset. It can be very useful for working with GPS data.
 
-1. Return to the Geoprocessing Tab, and click the **Back Arrow** to return to the **Search Results**. 
+1. On the Geoprocessing Tab, and click the **Back Arrow** to return to the **Search Results**. 
 2. Search for "**Standard Distance**" and click on teh resulting **Standard Distance script tool**
-3. Use your **Deaths_Allocated** layer as the **Input Feature Class**
+3. Use **Deaths_Allocated** as the **Input Feature Class**
 4. Add a "**1**" to the end of the name of the **Output Standard Distance Feature Class** and confirm that the **Circle Size** is set to **1 standard deviation**
 5. Use **Num_Cases** as the **Weight Field** and click **Run**.
 
 ![](media/oddsd.png)
 
-The resulting Standard Distance circle, is not a circle. This is because we used unprojected data for the calculation, which geoprocessing tools that measure distance and area often have trouble with. If you look to the bottom of the Geoprocessing panel, you will notice that the **Standard Distance completed with warnings** and that hovering your mouse reveals more information about the error, including a clickable link.  
+The resulting Standard Distance circle, is not a circle. This is because we used unprojected data (using long.and lat. degrees) for the calculation, which geoprocessing tools that measure distance and area often have trouble with. If you look to the bottom of the Geoprocessing panel, you will notice that the **Standard Distance completed with warnings** and that hovering your mouse reveals more information about the error, including a clickable link.  
 
 ![](media/projectionwarning.png)
 
 ### Export your deaths data with a new projection
 
-Here, we will export our **Deaths\_Allocated** dataset to a new version, while translating to a Projected Coordinate System that is appropriate for measuring distance at the scale of our project. 
+We will export our **Deaths_Allocated** dataset to a new projected version (flattened to use meters), translating it to a Projected Coordinate System that is appropriate for measuring distance at the scale of our project. 
 
-1. Right-click on the **Deaths\_Allocated** layer, in the **Table of Contents** and go to **Data>Export Features**
-2. Name the **Output Feature Class** **Deaths\_Allocated\_UTM** 
+1. Make sure the layer is Selected.  Go to the **Feature Layer > Data Tab >** and click on **Export Features**  *(or right-click on the Deaths_Allocated layer and Data>Export Features)* 
+2. Name the **Output Feature Class** **Deaths_Allocated_UTM** 
 3. Click on the **Environments Tab**, at the top of the Geoprocessing Panel. 
-4. Click on the **Globe icon** at the right of the drop-down and expand the Layers section. 
+4. Click on the **Globe icon** at the right of the drop-down and expand the Layers section. (these are different projections of the different layers in your map).
 5. Select the **WGS 1984 UTM Zone 30N** projection and click **OK**.
 6. Click **Run** to export the new Feature Class
 
-Return to the **Standard Distance** Tool and run it again, this time using your **Deaths\_Allocated\_UTM** as the **Input Feature Class**
+Return to the **Standard Distance** Tool and run it again, this time using your **Deaths_Allocated_UTM** as the **Input Feature Class**
 
 ![](media/standarddistance.png)
 
@@ -393,7 +439,7 @@ Run the **Standard Distance** again, this time without a **Weight** field and ob
 
 ### Creating a surface from Point Data to Highlight “Hotspots”
 
-Hotspot mapping is a popular technique for quickly identifying "Hotspots" or other spatial structures in your data. At it simplest, you are having the software "interpolate" the values of the entire study area, based upon the discrete samples that our **Deaths\_Allocated\_UTM** represent. 
+Hotspot mapping is a popular technique for quickly identifying spatial structures in your data. You have the software "interpolate" or guess the values of the entire study area, based upon the discrete samples of each pump that our **Deaths_Allocated** points represent. 
 
 #### Kernel Density
 
