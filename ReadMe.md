@@ -117,139 +117,103 @@ There are 3 tabs:     ***Appearance, Labeling*** and ***Data***.
 #### The Selection Tools
 The Selection tools Provide ways to select features within a layer as well as by Attributes.  Test, then Clear selection.
 
-![./media/selectiontoolbar.png](./media/selectiontoolbar.png) 
+![./media/select.png](./media/select.png) 
 
 #### Layer Visibility
 The Table of Contents controls Layer Visibility using the checkbox next to each Layer.
- Use the Visibility Checkbox next to the London Layer to turn off the layer. 
+ Use the **Visibility** Checkbox next to the **London** Layer to turn off the layer. 
 
+![](./media/visibility.png) 
 
+#### Add another Data Layer
 
+The **Area of Interest** defines our data-frame in this John Snow study. This will provide us with a convenient way to limit the processing extent of certain geo-processing tools.
 
-
-Now we're going to add an existing data layer. The data layer that we will add describes our **Area Of Interest** in this study. This layer will provide us with a convenient way to orient our data frame to the area that we are interested in, as well as providing a way to limit the processing extent of certain geo-processing tools.
-
-1. In the **Catalog panel**, right-click on the **Folders** item and click on "Add folder connection."  Browse to the data folder for this workshop, select and clikc **Add**
-2. Expand the newly added data folder, and drag-and-drop the Study_Area.shp file into your **Map** frame.
-3. Right click on the **color patch** for the newly added layer, in the Table of Contents and select **No color**
-
+1. In the Catalog panel drag and drag-and-drop the **Study_Area.shp** into the **Map.
+2. Zoom into the small square *(you can also right-click to ‘zoom to Layer’)*
+3. Make it into a square frame instead of a colored square: **Appearance > Symbology > properties > Color > no Color**   *(or right-click on the color patch in ‘Contents’ and select No color.)
 
 ![](./media/add_layer.png)
 
 ### Save the project
+There is no autosave.
 
+### Create a data layer from an XY table
 
-### Create a data layer from an XY table?
+We want to add the points where deaths from Cholera happened. This set of data is a table, not a spatial data set. This table contains fields with the latitude and longitude coordinates of the deaths addresses we want to analyze.
 
-Often the data sets that you want to work with will not come as spatial data sets. In this step we will add a table of data that contains fields with the latitude and longitude coordinates of the deaths addresses we want to analyze.
+1. Drag the ‘deathAddresses.csv file onto the contents window.
+2.	On the **Map** Tab > click on **Add Data** > 
+3. We want to **Add XY Point Data**. This will open the **‘Geoprocessing’** tools window, with the tool: **“XY Table to Point”**.  *(You can also find this through Analysis > Tools > search for ‘XY’)*. 
 
-1. Return to the Catalog Panel and, in the data folder, right-click on the deathAddresses.csv and select Export>Table to Point Feature Class. This will open the **XY Table to Point** Geoprocessing Tool as a tab on top of the Catalog Panel.
-2. For **Output Feature Class**, check that the feature class will be exported to the default.gdb in your project folder and replace the default name with "**Deaths**"
-3. The remaining settings should be as shown below:  
-![](./media/XYtopoints.png)  
-4. Click **Run** and wait for the points to be added to the Map panel.
+![](./media/XYpointdata.png)
+
+4. For **Output Feature Class**, check that the feature class will be exported to the default.gdb in your project folder. This ‘globaldatabase (gdb) is the default location for all new data you create, and is integrated into your map package file. It helps you keep track of your new data.
+5. replace the default name with "**Deaths**"
+6. The remaining settings should be as shown below: *(make sure the coordinate system is GCS_WGS_1984)*
+
+![](./media/XYtopoints.png)
+
+7. Click **Run** and wait for the points to be added to the **Map** panel and the new layer to the **Contents**.
 
 ![](./media/deathsadded.png)
+
+### Statistics on a field  
+
+Take a peek at the data behind the Map. *(Make sure the layer is selected – framed in blue).* 
+
+1. Open the Attribute table:  **Feature Layer > Data > Attribute Table**  *(Shortcut: right-click on the  layer and slide down to Attribute Table)*
+2. The **Num_Cases** field in the Deaths layer indicates the number of deaths at each address. You can get a simple statistical snapshot of the variable from the Attribute Table.
+3. Right-click on the header of the **Num_Cases** field and select **Statistics**
+2. A histogram of the data distribution will appear over the top of the Attribute Table, and a "Distribution of Num_Cases" panel will appear in the tabbed panel area, on the right. 
+
+![](./media/Statistics.png)   
 
 ### Layer symbology  
 #### Proportional symbols on Deaths  
 
-1. Right-click on the Deaths layer, in the Table of Contents, and select Symbology... to open the Symbology Panel tab on top of the Catalog and Geoprocessing Panels that are already opened.
-2. Use the Drop-down to change the Primary Symbology to **Proportional Symbols** and set the Field=Num_Cases
-3. Note in the **Histogram** and the bottom of the panel that the range of values for the Num_Cases is 1-8. Set the Minimum size = 1.00 and the Maximum size = 18, accordingly.
-4. Click on the Template for the symbol and select Circle 3 (40%). Return to the Symbology panel by clicking on the back arrow at the top of the panel.  
+1. Different numbers of people died at each address.  Investigate the field: Num_Cases, by opening the attribute table: **Feature Layer > Data > Attribute Table** (*or right-click on the layer)*.
+2. Open Symbology:  **Appearance > Symbology**.  *(Or right-click)*
+2. Click the Drop-down to change the 'Single Symbol' to **Proportional Symbols** and set the Field=Num_Cases
+3. In the **Histogram** the range of values for the Num_Cases is 1-18. Set the Minimum size = 1.00 and the Maximum size = 18, accordingly.
+4. Click on the Template for the **symbol** and select Circle 3 (40%). Return to the Symbology panel by clicking on the back arrow.  
 
-![](./media/proportionalsymbols.png)
+![](./media/proportional.png)
 
-#### Bonus: Setting a Reference Scale
+#### Setting a Reference Scale for Zooming
 
-1. Now that you have created a symbology, zoom in and out of the daMap/Data Frame to see how the symbology interacts with the scale of the map. Note that the symbology remains the same size, regardless of the scale that you are viewing the map. 
-2. Right-click on the **Map** item at the top of the **Table of Contents** and select **Properties**, to open the **Map Properties** dialog.
+1. As you Zoom in and out of the Map/Frame the symbology remains the same size, regardless of the viewing scale.  We’d like to keep it proportional. Any changes that you want to make to the WHOLE map need to be made to the full map-frame. 
+2. Right-click on the **Map** item at the top of the **Contents** and select **Properties**, to open the **Map Properties** dialog.
 3. In the **General** table, change the **Reference scale** option to 1:5000. Click OK to apply the setting.
-4. Zoom in and out of the Map to see that the symbols now change size with the scale of the map. 
+4. Zoom in and out to see that the symbols now change size along with the map. 
 
 ![](./media/referencescale.png)
 
-### Explore Map tools
+####Spatial Bookmarks
 
-Now we will explore the **Map tools** in ArcGIS Pro. 
+To move around the map and then efficiently return to our primary area of interest, it is often useful to create a spatial bookmark.
+1.	Right-click on the study_area layer and Zoom to layer.
+2.	On the **Map Tab > Bookmarks  > New Bookmark**.  Name it **“SOHO”**
+3.	Click on the **Full Extent** button to zoom to the world, then use the **Map > Bookmarks > Soho** to return.
 
-The **Map/Navigate Toolbar** provides the bulk of the tools for navigation in
-the **Map Frame**. Navigation in the ArcGIS Pro Map is accomplished using the mouse to click-&-drag, and the scrolling wheel to zoom in and out, similar to web "slippy" maps. 
+![](./media/bookmarks.png)
 
-![](./media/navigatetoolbar.png) 
-
-
-
-* The **Zoom Tools** allow you to:  
-![](./media/zoomtools.png) 
-	* Zoom to Full Extent 
-	* Zoom to Selection 
-	* Fixed Zoom In & Out 
-	* Next & Previous Extent
-
-
-
-### Spatial Bookmarks
-
-![](./media/bookmarks.png) 
-
-Often, we want to be able to move around in our data frame examining different parts of the map zooming in and out, and then returning to our primary area of interest. This can be easily accommodated through the use of spatial bookmarks. Here you'll create a spatial bookmark which allows us to quickly return to the area that we are interested in.
-
-1. Previously we used the main menu to enable a panel. This time, try right-clicking in any empty area of the toolbar then scroll down and select the **Spatial Bookmarks panel** from the menu that is presented.
-2. Right-click on your study_area layer and select **Zoom to layer**.
-3. Click on the **Add Bookmark** button and rename the resulting Spatial Bookmark: "**SOHO**"  
-![](./media/spatialbookmark.png)
-4. Click on the **Zoom Full** button to zoom to the world, then use the **Zoom to bookmark ** button to return to your Area of Interest.
-
-### The Layers Tools
-
-![](./media/layertoolbar.png)  
-
-The **Layer tools** provide the ability to Add or change the basemap for the Map Frame, as well as adding existing data from a number of sources (File, Web Services, etc...). 
-### The Selection Tools
-
-![](./media/selectiontoolbar.png)  
-
-The **Selection tools** Provide ways to select features within a layer interactively, by intersection with other layers, as well as by Attributes. 
-
-## Working with spatial data
-### Viewing the Attribute Table
-
-Up to this point we've been mostly concerned with building a new map project. Now we'd like to take a peek at some of the data behind the Map Frame.
-
-1. Right-click on the **Deaths** layer in the **Table of Contents** and select **Attribute Table**.
-2. Note that you can sort fields, scroll, select by attributes, etc...
-
-### Statistics on a field  
-
-As mentioned, above, the **Num_Cases** field in the Deaths layer indicates the number of deaths at each address in the dataset. You can get a simple statistical snapshot of the variable from the Attribute Table.
-
-1. Right-click on the header of the **Num_Cases** field and select **Statistics**
-2. A histogram of the data distribution will appear over the top of the Attribute Table, and a "Distribution of Num_Cases" panel will appear in the tabbed panel area, on the right. 
-3. On the window select **Death Addresses** as the Input Vector layer and **Num_Cases** as the Target field.
-4. **Click Run** and **Close** 
-5. Look for the **Results Viewer** panel which should have been activated, and click on the **Hyperlink** to open the summary in a web browser.  
-
-
-![](./media/statisticsonafield.png)   
-
-## Creating Spatial Data
+## Creating New Spatial Data
 
 ### Georeference a map  
 
 Our goal in this workshop is to explore the cholera outbreak of 1854 and determine whether there is evidence that the Broad Street pump is the source of the outbreak. To do this we want to spatially allocate all of the death addresses in our data set to the water pump that they are nearest. Often the data that we need for our analysis doesn't exist in the format that we need it in. In this section we will use John Snow's original map of the 1854 cholera outbreak as a source for the locations of the water pumps in our analysis. 
 
-1. Browse to the data folder and drag-and-drop the **snow_map.png** image into the Map of your project. 
-2. Click Yes when prompted to "Build pyramids..."
+1. From the data folder and drag-and-drop the **snow_map.png** image into the **Map** of your project. 
+2. Click Yes if you are prompted to "Build pyramids". *(if it doesn’t prompt, you can right-click on the layer)*
 ![](./media/pyramids.png)
-3. Note that the layer is added to the Table of Contents, but doesn't' not yet appear in the Map Data Frame.
-4. Click on the **snow_map.png** Layer to select it and then click on the Imagery tab to activate the Imagery tools. Click on the Georeference Tool to open the Georeferencing Tools and start georeferencing.  
+3. Note that the layer is added to the  **Contents**, but doesn't yet appear in the Map.
+4. Click on the **snow_map.png** Layer to select it and then click on the **Imagery** tab (to activate the **Imagery tools**). Click on the **> Georeference** icon to open the **Georeferencing** Tool bar and start georeferencing.  
 ![](./media/georeferencebutton.png)  
 5. Right-click and "Zoom to..." the **snow_map.png**, then use the mouse scroll button to zoom to the upper left corner of the image, where the **Regent Circus** can be found.
 6. Click on the **Add Control Points** tool and then place a Control Point Link at the center of Regent Circus.  
 ![](./media/firstgcplink.png)  
-7. Right-click and "Zoom to..." the **Study_Area** layer. Use the mouse scroll wheel to zoom into the same area of Regent Circus, and place the second GCP link at that location. Note that the map image will automatically "snap" these two GCP links together.  
+7. Right-click and "Zoom to..." the **Study_Area** layer. Use the mouse scroll wheel to zoom into the same area of Regent Circus, and place the second GCP link at that location. Note that the map image will automatically "snap" these two GCP links together. *(If it remains invisible, save and close georeferencing, then re-open. This just happens sometimes)* 
 ![](./media/secondgcplink.png)  
 8. Use the scroll wheel to zoom out and then into the bottom right corner of the **snow_map.png** layer to find the Intersection of **Oxendon Street & Coventry Street**. Add a Ground Control Point link to the Southeast corner of the intersection.
 9. Toggle off the visibility of the **snow_map.png** and **right-click>Zoom to...** the **Study_Area** layer. 
@@ -257,7 +221,7 @@ Our goal in this workshop is to explore the cholera outbreak of 1854 and determi
 11. Toggle the visibility of the **snow_map.png** layer to see that it has "snapped" these two links together, as before. 
 12. Locate and place 3 more **Ground Control Points** (1 in each remaining corner and one near the center).  
 ![](./media/allgcp.png)
-13. Click on the **Export Control Points** button and save the control points you have created to your data folder as GCP.TXT.
+13. If you make a mistake, you can show the control point table, turn off each point one-by-one to see which one is faulty, and then select and delete that point. 
 14. Click on the **Save** button of the **Georeference** toolbar, then click on the **Close Georeference** button. 
 15. Browse to the **data** folder using your Windows File Explorer and note that new files have been added to the folder. They include **snow_map.png.pgwx**, which is the "World File" for the image you just georeferenced. As long as this file sits next to the **snow_map.png** file, GIS applications, such as Google Earth Desktop, ArcGIS, QGIS, etc... should now be able to colocate this image with other datasets.  
 ![](./media/worldfile.png)
@@ -280,28 +244,28 @@ Now we would like to digitize the locations of the **Water Pumps** in the neighb
 
 ### Add points to your Feature Class
 
-1. Drag-and-Drop the new **pumps** Feature Class into your Map Frame. Note that the layer is added to the Table of Contents, using the alias: **Water Pumps**. 
-2. With the **Water Pumps** layer selected in the Table of Contents, Click on the Edit Tab, at the top of ArcGIS Pro, to activate the Edit tools.   
 ![](./media/edittoolbar.png)  
-3. Right-click on the **Water Pumps** layer and Open the **Attribute Table**. If it is not, already, drag the attribute table to dock it at the bottom of the Map Frame.
-3. Click on the **Create** tool button, and note that a set of templates for each of your vector data layers will appear in as a panel on the right.  
+
+1. Drag-and-Drop the new **pumps** Feature Class into your Map Frame. Note that the layer is added to the Table of Contents, using the alias: **Water Pumps**. 
+2. With the **Water Pumps** layer selected in the Table of Contents, Click on the **Edit** Tab, at the top of ArcGIS Pro, to activate the **Edit** tools ribbon.   
+3. Click on the **Water Pumps** layer and open the **Attribute Table.  > Feature Layer > Data > Attribute Table** *(or right-click)*. 
+4. Click on the **Create** tool button, and note that a set of templates for each of your vector data layers will appear in as a panel on the right.  
 ![](./media/createbutton.png)  
-4. Click on the **Water Pumps** template, in the **Create Features** panel on the right, to select the Water Pump point.  
-5. Locate a Water Pump in the **snow_map.png** layer and click on it to place the point. 
-6. In the Attribute Table, below, double-click on the new record, under the **Label** field and enter a value for the Label field (we will use the name of the nearest street), and hit **RETURN**.
-7. Repeat for the remaining 12 water pumps in the Snow Map.  
+5. Click on the **Water Pumps** template, in the **Create Features** panel on the right, to select the Water Pump point.  
+6. Locate a Water Pump in the **snow_map.png** layer and click on it to place the point. 
+7. In the Attribute Table, below, double-click on the new record, under the **Label** field and enter a value for the Label field (we will use the name of the nearest street), and hit **RETURN**.
+8. Repeat for the remaining 12 water pumps in the Snow Map. (13 pumps in all; some right near the edge.)  
 ![](./media/editpoint.png)  
-8. Click the **Save** button and confirm to save your edits.
-9. Close the **Create Features** Panel to close the edit session.
-10. Close the Water Pumps Attribute Table.
-11. Zoom to the Water Pumps.
+9. Click the **Save** button and confirm to save your edits.  Close the **Create Features** Panel to close the edit session.
+Close the Water Pumps Attribute Table.
+ Zoom to the Water Pumps.
 12. Toggle off the visibility of the **snow_map.png** layer.  
 ![](./media/pumpswithlabels.png)  
 
 
-### Bonus: Finding an already georeferenced map from DavidRumsey.com
+### Finding an already georeferenced map from DavidRumsey.com
 
-There are many venues for searching for old maps as sources for spatial data and I've listed a few of our favorites, below. Of course, there are many considerations of scale, authority, projections, etc... when using a scanned map as a data source, it is possible to scan and georeference just about any map you can find reference data (another map to georeference to) for.
+There are many venues for searching for old maps as sources for spatial data and I've listed a few below. Of course, there are many considerations of scale, authority, projections, etc.when using a scanned map as a data source, it is possible to scan and georeference just about any map you can find reference data (another map to georeference to) for.
 
 * [earthworks.stanford.edu](earthworks.stanford.edu)
 * [DavidRumsey.com](DavidRumsey.com)
