@@ -1,71 +1,55 @@
 # ArcGIS Pro 101
 
-https://mapninja.github.io/ArcGIS-Pro-101/
+https://zarazaga.github.com/ArcGIS-Pro-Snow/
 
+Jessie Marshall Zarazaga - GIS@SMU - jzarazaga@smu.edu
 
-Stacey Maples – Geospatial Manager – Stanford Geospatial Center – stacemaples@stanford.edu
-
-David Medeiros – GIS Instruction & Support Specialist - Stanford Geospatial Center - davidmed@stanford.edu
+*based on workshop by Stacey Maples, Geospatial Manager, stacemaples@stanford.edu Stanford Geospatial Center*
 
 ## Overview
 
-This workshop aims to accomplish two things: Introduce participants to basic vocabulary, concepts and techniques for working with spatial data in research and introduce the interface and tools in ArcGIS Pro, a desktop GIS software distributed by Esri. This introductory session will focus upon the fundamental concepts and skills needed to begin using Geographic Information Systems software for the exploration and analysis of spatial data using the QGIS platform.  
-
-Topics will include:  
-
-* What is GIS?
-* Spatial Data Models and Formats
-* Projections and Coordinate Systems
-* Basic Data Management
-* The ArcGIS Pro User Interface
-* Simple Analysis using Visualization
-
-GIS Resources:
-Stanford Geospatial Center website - http://gis.stanford.edu/
-
-Stanford GIS Listserv - https://mailman.stanford.edu/mailman/listinfo/stanfordgis
-
-
-
-Download Tutorial Data
+Introduce basic vocabulary, concepts and techniques for working with spatial data in research. Introduce the interface / tools of ESRI ArcGIS Pro, desktop GIS software.  
 
 ## Setup
 
-Users should prepare for this workshop by installing the ArcGIS Pro software and downloading the data to their local hard drive.
+**Software** - 
+Install the ArcGIS Pro software.
 
-Stanford Geospatial Center's ArcGIS Pro Installation files can be obtained by Stanford Affiliates with a valid SUNetID at: [https://stanford.box.com/v/EsriSoftwareInstallers](https://stanford.box.com/v/EsriSoftwareInstallers) 
+**Data**
 
-### Software
+Download the zip folder:  https://smu.box.com/v/IntroGISPro
 
-This workshop was created using ArcGIS Pro version 2.4.x. If you are installing for the first time, using the above referenced installer, be sure to log into your Stanford ArcGIS.com account to enable updating of the software to the most recent version.
+Right-click on the *.zip and select Extract All.  Save on your DESKTOP.
 
-[https://qgis.org/en/site/forusers/download.html](https://qgis.org/en/site/forusers/download.html)
+Open the folder and look at the data: 
+* **snow_map.png** - this is a non-georeferenced image of the map from John Snow’s original report on the cholera outbreak of 1854.
 
-### Data
+* **deathAddresses.csv**  - this is a table of latitude and longitude coordinates for addresses affected by the cholera outbreak. This table also contains the number of deaths at each address.  
 
-The data package for the workshop can be downloaded from [https://github.com/mapninja/QGIS-101/archive/master.zip](https://github.com/mapninja/QGIS-101/archive/master.zip)
+* **London.shp** - a shapefile showing all the boroughs of the modern city of London.
 
-The project data folder contains the following datasets:
-
-* **deathAddresses.csv**  - this is a table latitude and longitude coordinates for addresses affected by the cholera outbreak. This table also contains the number of deaths at each address.  
-* **snow_map.png.tif** - this is a non-georeferenced image of the map from John Snow's original report on the cholera outbreak of 1854. 
-* **Study_Area.shp** - This file is simply a rectangular feature that describes our area of interest.  
-
+* **Study_Area.shp** - A rectangular feature that describes our area of interest.  
 
 #### Additional Files
-There is an extra backup data folder that contains versions of files that we will create during the workshop. These files are provided in case any of the steps can't be completed due to software errors or other problems. Welcome to working with open source.  
-* **Snow-cholera-map-1_modified** - this is a geo-referenced image of the map from John Snow's original report on the cholera outbreak of 1854.  
-* **Water_Pumps.geojson** - this is a spatial data file containing the locations of all of the water pumps recorded in John Snow's original map of the cholera outbreak.  Who woo hoo 
+an extra backup data folder that contains versions of files that we will create during the workshop.  
 
-## Getting started on a project  
 
-In this section we will cover starting a new QGIS project. We will create a new map document, go over the basic QGIS interface, customize that interface, add a plug-in and bring a base map into your QGIS project.
+## Open the ‘Snow_map’ Image  
+![./media/SnowMap.png](./media/SnowMap.png)
+
+This is the famous map drawn by Dr John Snow, the founding father of modern epidemiology.  London suffered a series of cholera outbreaks during the mid-19th century, and Snow theorized that cholera was spread through contaminated water, rather than the prevailing theory of spread through "miasma" in the air.
+
+London's water supply system consisted of shallow public wells where people could pump water to carry home; the sewage system of privies emptied into cesspools or cellars. The pervasive stench made the miasma theory very plausible. 
+
+During the 1854 cholera outbreak Snow mapped the 13 public wells and all the known cholera deaths in the Soho district, near his home, and noted the spatial clustering of cases around the Broad Street water pump.  He had the pump handle removed from the Broad Street pump and the outbreak quickly subsided. Snow subsequently published a map of the epidemic to support his theory, showing the locations of the 13 wells and the addresses of the 578 cholera deaths, marked as stacked black bars.  
+Our goal in this workshop is to explore the cholera outbreak of 1854 and determine whether there is evidence that the Broad Street pump is the source of the outbreak. We will map the locations and numbers of the cholera deaths, and compare them to the nearest water pumps.
+
 
 ### Create a Map Document
 
-1. To create a new map document, Open ArcGIS Pro...
-2. On the resulting splash page, select "Start without a template." You will be presented with a blank ArcGIS Pro interface. 
-3. Switch to the **Insert** Tab at the top of ArcGIS Pro, if necessary. Click on the **New Map** button to add a basemap and create a view similar to that, below:
+1. Create a new map document. Open ArcGIS Pro. Login with ArcGIS login.
+2. Select “Start without a template.” A blank ArcGIS Pro interface opens.. 
+3. Switch to the **Insert** Tab at the top of ArcGIS Pro. Click on the **New Map** button to add a basemap and create a view similar to that, below:
 
 ![arcgispro_newmap-drop-shadow.png](./media/arcgispro_newmap-drop-shadow.png)
 
