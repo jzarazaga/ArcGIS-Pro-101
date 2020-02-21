@@ -51,28 +51,82 @@ Our goal in this workshop is to explore the cholera outbreak of 1854 and determi
 2. Select “Start without a template.” A blank ArcGIS Pro interface opens.. 
 3. Switch to the **Insert** Tab at the top of ArcGIS Pro. Click on the **New Map** button to add a basemap and create a view similar to that, below:
 
-![arcgispro_newmap-drop-shadow.png](./media/arcgispro_newmap-drop-shadow.png)
-
-### Interface overview
-
-The ArcGIS Pro interface is similar to many Windows-based desktop applications and the basic ArcGIS Pro layout resembles most others GIS interfaces in that it uses a table of contents and data frame model for user interaction. 
+![arcgispro_newmap.png](./media/arcgispro_newmap.png)
 
 #### The Basic Components of the ArcGIS Pro Interface
 
 The ArcGIS Pro interface is made up of three basic components:
 
-**The Data/Map Frame** – the map canvas is where your visualizations of data will show up when you had a new data layer. This is where you will view the changes that are made when you adjust symbology, when you change the order of layers, or when you produce a new data set through geo-processing  
+**Ribbon** - Ribbon toolbar at the top which organizes tools into themes, such as Map and Analysis. **Get used to starting with the Ribbon.**
 
-**The Table of Contents** - The Table of Contents, like that in ArcMap, is where the "Layers" and datasets appear, as they are added to the map. Accos teh top of the Table of Contents, you are able to change the view from "Display order" to 
+**The Data/Map Frame** – Map canvas where data visualizations appear.   
 
-
-![./media/tableofcontents.png](./media/tableofcontents.png)
+**The Table of Contents** - Where the “Layers” and datasets appear, as they are added to the map.   
+ (Others tools appear on the Ribbon when their context is enabled.   eg. Click on a basemap layers to enable the ***Vector Tile Layer*** **Appearance** tab which allows you to set scale-dependent rendering and transparency.)
 
 **Ribbon** - ArcGIS Pro uses a ribbon toolbar at the top of the interface which organizes tools into related themes, such as Map and Analysis. Other themes will appear when their context is enabled. For instance, clicking on one of the basemap layers enables the **Vector Tile Layer Appearance** tab, which provides for setting scale-dependent rendering and transparency.
 
-![./media/map_ribbon-drop-shadow.png](./media/map_ribbon-drop-shadow.png)  
+![./media/map_ribbon.png](./media/map_ribbon.png)  
 
-### Add an existing data layer
+### Add a GIS shapefile data layer
+
+1.	Go back again to the **Insert** Tab at the top of ArcGIS Pro. Click on the **Add Folder** button, browse to the workshop folder **‘ArcGIS Pro JohnSnow’** but don’t open it. Press **OK.**
+2.	In the Catalogue pane, click on the down arrow for **Folders > ArcGIS-Pro-JohnSnow > data > London_Borough.shp**, and drag that shapefile onto the map.
+
+![./media/london.png](./media/london.png)  
+
+### Explore Navigation Tools and Visibility 
+Most GIS navigation is quite familiar- using the mouse and mouse wheel.  Press to Pan, role to zoom. 
+Look on the MAP tab, in the ‘Navigate’ set of tools, for the various ‘zoom options.  If you glide over each tool it will describe it.  They’re quite self-explanatory. Try them!
+
+![./media/explore.png](./media/explore.png) 
+
+### Working with Layers 
+#### Display Order  
+The Layer Order in the **Contents** determines the order of display in your Map, when it is listed by 'Drawing Order Mode'.  (you can also display your Contents as 'List by Source')
+Click and Drag the **London** layer to the bottom of **Contents**.  It has gone behind the basemap.  Drag it back!
+#### ESRI 'Cloud' Basemap Data
+As default with a new Map, ArcGIS Pro provides a pre-designed cartographic basemap to give your data geographic context.  You can turn this layer on or off, or change it.  
+On the **Map** Tab, go to **Basemap**, and select **‘Light Grey Canvas’** or any alternative basemap.
+
+![./media/basemap.png](./media/basemap.png) 
+
+### Feature Layer Tab
+Most layer manipulation can be done under the **Feature Layer** tabs.  There are also short-cuts to do these tasks but the **Feature Layer** tab offers primary paths to work with layers.  
+*(Note: almost every sub-command in Arc can be found 2 ways; as an icon on the feature tab, or by right-click and ‘properties’ in the contents for those familiar with ArcMap)*
+
+Click onto the **London** layer.                   
+The **Feature Layer** (orange) set of tabs appears at the top of the screen.  
+
+There are 3 tabs:     ***Appearance, Labeling*** and ***Data***. 
+
+***Appearace***: If you press **Symbology**, you can change all aspects of the appearance of your data. Change the color by pressing on the Symbol square in the right window. *(Or right click on the layer)*
+
+***Labeling***: Press the option **‘Label’** The default Field shown will be Name, and all the Borough names will show on your map.
+
+***Data*** tab; The second block has a button for the **‘attribute table’**.  Press it.  This is the data table from which this set of polygon shapes has been drawn. *(Or right-click on the layer in the contents window.)*
+
+![./media/attribute.png](./media/attribute.png) 
+
+1.	Open the Attribute table:  **Feature Layer > Data > Attribute Table**  *(Shortcut: right-click on the  layer and slide down to Attribute Table)*
+
+![./media/attribute_table.png](./media/attribute_table.png) 
+
+2.	You can sort fields by Ascending, scroll through the data, add additional fields to the table etc.
+
+#### The Selection Tools
+The Selection tools Provide ways to select features within a layer as well as by Attributes.  Test, then Clear selection.
+
+![./media/select.png](./media/select.png) 
+
+#### Layer Visibility
+The Table of Contents controls Layer Visibility using the checkbox next to each Layer.
+ Use the Visibility Checkbox next to the London Layer to turn off the layer. 
+
+
+
+
+
 Now we're going to add an existing data layer. The data layer that we will add describes our **Area Of Interest** in this study. This layer will provide us with a convenient way to orient our data frame to the area that we are interested in, as well as providing a way to limit the processing extent of certain geo-processing tools.
 
 1. In the **Catalog panel**, right-click on the **Folders** item and click on "Add folder connection."  Browse to the data folder for this workshop, select and clikc **Add**
