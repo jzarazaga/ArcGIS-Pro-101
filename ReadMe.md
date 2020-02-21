@@ -1,6 +1,6 @@
-# ArcGIS Pro 101
+# ArcGIS Pro Snow
 
-https://zarazaga.github.com/ArcGIS-Pro-Snow/
+https://github.com/zarazaga/ArcGIS-Pro-Snow
 
 Jessie Marshall Zarazaga - GIS@SMU - jzarazaga@smu.edu
 
