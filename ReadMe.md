@@ -117,7 +117,7 @@ There are 3 tabs:     ***Appearance, Labeling*** and ***Data***.
 #### The Selection Tools
 The Selection tools Provide ways to select features within a layer as well as by Attributes.  Test, then Clear selection.
 
-![./media/select.png](./media/select.png) 
+![./media/selectiontoolbar.png](./media/selectiontoolbar.png) 
 
 #### Layer Visibility
 The Table of Contents controls Layer Visibility using the checkbox next to each Layer.
