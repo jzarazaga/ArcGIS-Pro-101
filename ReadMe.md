@@ -108,14 +108,23 @@ There are 3 tabs:     ***Appearance, Labeling*** and ***Data***.
 
 ![./media/attribute.png](./media/attribute.png) 
 
+### Work with the Layer
+
 1.	Open the Attribute table:  **Feature Layer > Data > Attribute Table**  *(Shortcut: right-click on the  layer and slide down to Attribute Table)*
 
 ![./media/attribute_table.png](./media/attribute_table.png) 
 
 2.	You can sort fields by Ascending, scroll through the data, add additional fields to the table etc.
+3. Note that there is a column on this table called POPDEN, that shows the population density in each borough of London. 
+
+Lets change the symbology to show the relative population density of the boroughs. 
+Click on the layer **London** **> Feature Layer> Appearance > Symbology >** slide down to **Graduated Colors**
+The field that we want to show is **POPDEN**, and the most appropriate classification method is probably quantile, with equal numbers of boroughs per class. *(You can also get to symbology with a right-click)*
+
+![](./media/London_quantiles.png) 
 
 #### The Selection Tools
-The Selection tools Provide ways to select features within a layer as well as by Attributes.  Test, then Clear selection.
+The Selection tools Provide ways to select features within a layer as well as by Attributes.  You can select by clicking on the map (shift to add more than one), by selecting rows in the attribute table, or by writing a set of selection parameters.  Test this, then always remember to prees **Clear** selection.
 
 ![./media/select.png](./media/select.png) 
 
@@ -127,16 +136,16 @@ The Table of Contents controls Layer Visibility using the checkbox next to each 
 
 #### Add another Data Layer
 
-The **Area of Interest** defines our data-frame in this John Snow study. This will provide us with a convenient way to limit the processing extent of certain geo-processing tools.
+The **Study_Area** defines our data-frame in this John Snow study. This will provide us with a convenient way to limit the processing extent of certain geo-processing tools.
 
 1. In the Catalog panel drag and drag-and-drop the **Study_Area.shp** into the **Map.
 2. Zoom into the small square *(you can also right-click to ‘zoom to Layer’)*
-3. Make it into a square frame instead of a colored square: **Appearance > Symbology > properties > Color > no Color**   *(or right-click on the color patch in ‘Contents’ and select No color.)
+3. Make it into a square frame instead of a colored square: **Appearance > Symbology > properties > Color > no Color**   *(or right-click on the color patch in ‘Contents’ and select No color.)  Add a strong colored border line.
 
 ![](./media/add_layer.png)
 
 ### Save the project
-There is no autosave.
+There is no autosave. The save button is at the very top of the screen.
 
 ### Create a data layer from an XY table
 
