@@ -10,6 +10,12 @@ Jessie Marshall Zarazaga - GIS@SMU - jzarazaga@smu.edu
 
 Introduce basic vocabulary, concepts and techniques for working with spatial data in research. Introduce the interface / tools of ESRI ArcGIS Pro, desktop GIS software.  
 
+THe history of modern epidemiology is tied up with the history of mapping. 
+
+https://www.youtube.com/watch?v=VJ86D_DtyWg
+
+https://www.history.com/topics/19th-century/mankind-the-story-of-all-of-us-videos-cholera-video
+
 ## Setup
 
 **Software** - 
