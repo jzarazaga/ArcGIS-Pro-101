@@ -514,24 +514,11 @@ In order to edit and adjust the map view, you need to activate the map in your l
 4. Use Ctrl-clicks to select these layers and then right-click>Group them. Rename the Group "In Map"
 5. Remove the remaining layers by Ctrl-click selecting and right-click>Remove.
 
-### Add an SVG Symbol
-https://publicdomainvectors.org/en/free-clipart/Vector-drawing-of-water-pollution/6505.html
 
-1. With the Map Frame still activated, Select the **Deaths\_Allocated\_Mean\_CenterW** layer and Click on the Appearance Tab
-2. Click on the **Symbology** button to open the Symbology Panel.
-3. In the Symbology Panel, click on the current **Symbol** point to open it's properties.
-4. Change to the **Properties** Tab, then click on the **Layers** button to begin importing a new symbol.  
-![](media/formatpoint.png)
-5. Click on the **File...** button, browse to your **/data/** folder and select the **frackingwater.svg** and click **OK** to open it. 
-6. Set the **Size** to 48pt
-7. Change teh Color to Blue
-8. Change the **Element** target to the water drop (you may have to scroll down to see it), then change its color to **Yellow**.
-9. Click **Apply** to commit the changes.
 
 
 
 ### Add & Format Text and Graphics  
-http://saganipsum.com/
 
 ### Add & Format a Legend
 
